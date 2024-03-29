@@ -1,56 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Strona z siatką kafelków</title>
-    <style>
-        .tile {
-            width: 100px;
-            height: 100px;
-            border: 1px solid black;
-            display: inline-block;
-            margin: 5px;
-            text-align: center;
-            line-height: 100px;
-        }
-    </style>
+    <title>Grid Display</title>
+    <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
-    <div id="grid-container"></div>
 
-    <script>
-        window.onload = function () {
-            fetchData().then(data => {
-                console.log(data);
-            });
-        };
-        function fetchData() {
-            return fetch('http://localhost:8080/pathfinder/')
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Network response was not ok');
-                    }
-                    return response.json();
-                })
-                .catch(error => {
-                    console.error('There was a problem with the fetch operation:', error);
-                });
-        }
+<div>
+    <h2>Create Grid</h2>
+    <input type="number" id="width" placeholder="Width">
+    <input type="number" id="height" placeholder="Height">
+    <button onclick="createGrid()">Create Grid</button>
+</div>
 
-        function createGrid(tileCount) {
-            const gridContainer = document.getElementById('grid-container');
-            for (let i = 0; i < tileCount; i++) {
-                const tile = document.createElement('div');
-                tile.classList.add('tile');
-                gridContainer.appendChild(tile);
-            }
-        }
+<div>
+    <div id="pointSelector">
+        <button id="selectEmpty" onclick="selectPointType('empty')">Puste Pole</button>
+        <button id="selectStart" onclick="selectPointType('start')">Punkt Startowy</button>
+        <button id="selectObstacle" onclick="selectPointType('obstacle')">Przeszkoda</button>
+        <button id="selectEnd" onclick="selectPointType('end')">Punkt Końcowy</button>
+    </div>
+</div>
 
+<div id="gridDisplay"></div>
 
-    </script>
+<script src="script.js"></script>
 </body>
-
 </html>

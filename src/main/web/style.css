@@ -1,0 +1,44 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+}
+
+input, button, select {
+    margin: 5px;
+}
+
+.grid-square {
+    width: 20px;
+    height: 20px;
+    display: inline-block;
+    border: 1px solid #555;
+}
+
+.empty {
+    background-color: #fff;
+}
+
+.start {
+    background-color: #4CAF50; /* Zielony */
+}
+
+.obstacle {
+    background-color: #f44336; /* Czerwony */
+}
+
+.end {
+    background-color: #2196F3; /* Niebieski */
+}
+
+#gridDisplay {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(20px, 1fr));
+    max-width: 640px;
+    margin: 20px auto; /* Dodatkowo wyśrodkowuje cały kontener siatki */
+    justify-content: center; /* Wyśrodkowanie kolumn */
+    align-items: center; /* Wyśrodkowanie wierszy (jeśli mają różną wysokość) */
+    padding: 20px;
+    border: 1px solid #ccc;
+    background-color: #f9f9f9;
+}
+

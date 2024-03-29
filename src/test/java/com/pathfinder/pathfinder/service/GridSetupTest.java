@@ -34,21 +34,29 @@ class GridSetupTest {
     void setStartingPointShouldThrowExceptionForOutOfBounds() {
         GridSetup gridSetup = new GridSetup();
         int[][] grid = new int[5][5];
-        assertThrows(ArrayIndexOutOfBoundsException.class, () -> gridSetup.setStartingPoint(grid, 6, 6));
+        assertThrows(ArrayIndexOutOfBoundsException.class, () -> gridSetup.setStartingPoint(grid, 7, 7));
     }
 
     @Test
     void setEndingPointShouldThrowExceptionForOutOfBounds() {
         GridSetup gridSetup = new GridSetup();
         int[][] grid = new int[5][5];
-        assertThrows(ArrayIndexOutOfBoundsException.class, () -> gridSetup.setEndingPoint(grid, 6, 6));
+        assertThrows(ArrayIndexOutOfBoundsException.class, () -> gridSetup.setEndingPoint(grid, 7, 7));
     }
 
     @Test
     void setObstacleShouldThrowExceptionForOutOfBounds() {
         GridSetup gridSetup = new GridSetup();
         int[][] grid = new int[5][5];
-        assertThrows(ArrayIndexOutOfBoundsException.class, () -> gridSetup.setObstacle(grid, 6, 6));
+        assertThrows(ArrayIndexOutOfBoundsException.class, () -> gridSetup.setObstacle(grid, 7, 7));
+    }
+
+    @Test
+    void setObstacleShouldThrowExceptionForNullValue() {
+        GridSetup gridSetup = new GridSetup();
+        int[][] grid = new int[5][5];
+        assertThrows(NullPointerException.class, () -> gridSetup.setObstacle(null, 7, 7));
+        assertThrows(NullPointerException.class, () -> gridSetup.setObstacle(null, 5, 7));
     }
 
 }

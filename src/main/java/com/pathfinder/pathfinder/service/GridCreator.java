@@ -6,7 +6,8 @@ import org.springframework.stereotype.Service;
 public class GridCreator {
 
     public int[][] createGrid(int rows, int columns) {
-        return null;
+        int[][] grid = new int[rows][columns];
+        return grid;
     }
 
 }

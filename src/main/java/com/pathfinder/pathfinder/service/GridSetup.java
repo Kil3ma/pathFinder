@@ -1,5 +1,7 @@
 package com.pathfinder.pathfinder.service;
 
+import com.pathfinder.pathfinder.model.GridPoint;
+import com.pathfinder.pathfinder.model.enums.ObjectType;
 import org.springframework.stereotype.Service;
 
 /**
@@ -9,6 +11,11 @@ import org.springframework.stereotype.Service;
 @Service
 public class GridSetup {
 
+    public int[][] setPoint(GridPoint gridPoint){
+        int[][] grid = gridPoint.getGrid();
+        grid[gridPoint.getX()][gridPoint.getY()] = gridPoint.getType().value;
+        return grid;
+    }
     /**
      * Sets the starting point on the grid.
      *
@@ -17,7 +24,8 @@ public class GridSetup {
      * @param y The y-coordinate of the starting point.
      * @return The grid with the starting point set.
      */
-    public int[][] setStartingPoint(int[][] grid, int x, int y) {
+    public int[][] setStartingPoint(int[][] grid, int x, int y) throws ArrayIndexOutOfBoundsException {
+        grid[x][y] = ObjectType.START_POINT.value;
         return grid;
     }
 
@@ -29,7 +37,8 @@ public class GridSetup {
      * @param y The y-coordinate of the ending point.
      * @return The grid with the ending point set.
      */
-    public int[][] setEndingPoint(int[][] grid, int x, int y) {
+    public int[][] setEndingPoint(int[][] grid, int x, int y) throws ArrayIndexOutOfBoundsException {
+        grid[x][y] = ObjectType.END_POINT.value;
         return grid;
     }
 
@@ -41,7 +50,8 @@ public class GridSetup {
      * @param y The y-coordinate of the obstacle.
      * @return The grid with the obstacle set.
      */
-    public int[][] setObstacle(int[][] grid, int x, int y) {
+    public int[][] setObstacle(int[][] grid, int x, int y) throws ArrayIndexOutOfBoundsException {
+        grid[x][y] = ObjectType.OBSTACLE.value;
         return grid;
     }
 

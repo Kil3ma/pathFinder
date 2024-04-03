@@ -8,21 +8,33 @@ public class PathFinder {
     private int x = 0, y = 0, endX = 0, endY = 0;
 
     public void findStartAndEndPoints(int[][] grid) throws IllegalArgumentException{
+        boolean moreThanOneStart = false;
+        boolean moreThanOneEnd = false;
+
         for(int i = 1; i < grid.length - 1; i++) {
             for (int j = 1; j < grid[i].length - 1; j++) {
                 if (grid[i][j] == ObjectType.START_POINT.value) {
+                    if(moreThanOneStart){
+                        throw new IllegalArgumentException("podano więcej niż 1 punkt startowy");
+                    }
                     x = i;
                     y = j;
                     grid[i][j] = ObjectType.PATH.value;
+                    moreThanOneStart = true;
+
                 } else if (grid[i][j] == ObjectType.END_POINT.value) {
+                    if(moreThanOneEnd){
+                        throw new IllegalArgumentException("podano więcej niż 1 punkt końcowy");
+                    }
                     endX = i;
                     endY = j;
+                    moreThanOneEnd = true;
                 }
             }
         }
         if(x == endX && y == endY){
             throw new IllegalArgumentException("brak punktu startowego lub końcowego");
-            }
+        }
     }
     public int[][] findPath(int[][] grid) throws IllegalStateException{
         findStartAndEndPoints(grid);
@@ -55,7 +67,6 @@ public class PathFinder {
                 }
             }
         }
-
         return grid;
     }
 

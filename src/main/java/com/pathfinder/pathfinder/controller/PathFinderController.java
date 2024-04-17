@@ -1,5 +1,6 @@
 package com.pathfinder.pathfinder.controller;
 
+import com.pathfinder.pathfinder.model.Grid;
 import com.pathfinder.pathfinder.service.PathFinder;
 import com.pathfinder.pathfinder.service.Printer;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,8 +15,8 @@ public class PathFinderController {
     public PathFinderController() {this.pathFinder = new PathFinder();}
 
     @PostMapping
-    public int[][] findPath(@RequestBody int[][] grid){
-        int[][] finalGrid = pathFinder.findPath(grid);
+    public int[][] findPath(@RequestBody Grid grid){
+        int[][] finalGrid = pathFinder.findPath(grid.getGrid());
         Printer.print(finalGrid);
         return finalGrid;
     }

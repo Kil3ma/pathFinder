@@ -41,9 +41,14 @@ public class PathFinder {
     public int[][] findPath(int[][] grid) throws IllegalStateException{
         findStartAndEndPoints(grid);
 
-        while(grid[endX][endY] != ObjectType.PATH.value){
+        while(grid[endX][endY] != ObjectType.PATH.value) {
             boolean noPath = true;
+            boolean found = false;
             for (int[] direction : directions) {
+                /*if (grid[x + direction[0]][y + direction[1]] == ObjectType.END_POINT.value) {
+                    found = true;
+                    break;
+                }*/
                 if (grid[x + direction[0]][y + direction[1]] == ObjectType.EMPTY.value) {
                     grid[x + direction[0]][y + direction[1]] = ObjectType.PATH.value;
                     x = x + direction[0];
@@ -51,6 +56,10 @@ public class PathFinder {
                     noPath = false;
                     break;
                 }
+            }
+
+            if (found) {
+                return grid;
             }
 
             if(noPath){

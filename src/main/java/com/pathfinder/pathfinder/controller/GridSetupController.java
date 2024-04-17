@@ -1,9 +1,7 @@
 package com.pathfinder.pathfinder.controller;
 
 
-import com.pathfinder.pathfinder.model.Grid;
 import com.pathfinder.pathfinder.model.GridPoint;
-import com.pathfinder.pathfinder.service.GridCreator;
 import com.pathfinder.pathfinder.service.GridSetup;
 import com.pathfinder.pathfinder.service.Printer;
 import org.springframework.web.bind.annotation.PostMapping;

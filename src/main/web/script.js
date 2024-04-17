@@ -1,42 +1,18 @@
 let currentGrid = [];
 
 function createGrid() {
-    const width = document.getElementById('width').value;
-    const height = document.getElementById('height').value;
-
-    fetch('http://localhost:8080/pathfinder/grid', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ width, height }),
-    })
-        .then(response => response.json())
-        .then(data => {
-            currentGrid = data;
-            displayGrid(data);
-        })
-        .catch(error => console.error('Error:', error));
+    let gridService = new GridService();
+    currentGrid = gridService.createGrid();
 }
 
-function setStartPoint() {
-    const x = document.getElementById('pointX').value;
-    const y = document.getElementById('pointY').value;
-    const type = document.getElementById('pointType').value;
-
-    fetch('http://localhost:8080/pathfinder/grid-setup/point', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ grid: currentGrid, x, y, type }),
-    })
-        .then(response => response.json())
+function search() {
+    const searchService = new SearchService();
+    searchService.fetchData(currentGrid)
         .then(data => {
-            currentGrid = data;
+            console.log(data);
             displayGrid(data);
         })
-        .catch(error => console.error('Error:', error));
+        .catch(error => console.error('Handling error:', error));
 }
 
 let selectedPointType = '';
@@ -47,8 +23,21 @@ function selectPointType(pointType) {
 
 function placePoint(square, rowIndex, columnIndex, cell) {
     if (selectedPointType) {
-        square.classList = 'grid-square'; // Resetuje poprzednie klasy
+        square.classList = 'grid-square';
         square.classList.add(selectedPointType);
+        switch(selectedPointType) {
+            case 'start':
+                currentGrid[rowIndex][columnIndex] = 1;  // Start point
+                break;
+            case 'obstacle':
+                currentGrid[rowIndex][columnIndex] = 3;  // Obstacle
+                break;
+            case 'end':
+                currentGrid[rowIndex][columnIndex] = 2;  // End point
+                break;
+            default:
+                currentGrid[rowIndex][columnIndex] = 0;  // Empty
+        }
     }
 }
 
@@ -74,10 +63,16 @@ function displayGrid(grid) {
                     square.classList.add('start');
                     break;
                 case 2:
-                    square.classList.add('obstacle');
+                    square.classList.add('end');
                     break;
                 case 3:
-                    square.classList.add('end');
+                    square.classList.add('obstacle');
+                    break;
+                case 4:
+                    square.classList.add('path');
+                    break;
+                case 9:
+                    square.classList.add('wall');
                     break;
                 default:
                     square.classList.add('empty');

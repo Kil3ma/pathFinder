@@ -1,57 +1,72 @@
 package com.pathfinder.pathfinder.service;
 
+import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
+
+import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@Slf4j
 class PathFinderTest {
 
-    @Test
-    void findPathShouldReturnCorrectPath() {
-        PathFinder pathFinder = new PathFinder();
-        int[][] grid = {
-                {9, 9, 9, 9, 9, 9, 9},
-                {9, 1, 0, 0, 0, 0, 9},
-                {9, 0, 0, 0, 3, 0, 9},
-                {9, 0, 3, 0, 3, 0, 9},
-                {9, 0, 3, 3, 3, 0, 9},
-                {9, 0, 0, 0, 0, 2, 9},
-                {9, 9, 9, 9, 9, 9, 9}
-        };
-        int[][] expectedGrid = {
-                {9, 9, 9, 9, 9, 9, 9},
-                {9, 4, 4, 4, 4, 4, 9},
-                {9, 0, 0, 0, 3, 4, 9},
-                {9, 0, 3, 0, 3, 4, 9},
-                {9, 0, 3, 3, 3, 4, 9},
-                {9, 0, 0, 0, 0, 4, 9},
-                {9, 9, 9, 9, 9, 9, 9}
-        };
-        assertArrayEquals(expectedGrid, pathFinder.findPath(grid));
+    private static Stream<Arguments> provideGridsForPathFinding() {
+        return Stream.of(
+                Arguments.of(
+                        "findPathShouldReturnCorrectPath",
+                        new int[][] {
+                                {9, 9, 9, 9, 9, 9, 9},
+                                {9, 1, 0, 0, 0, 0, 9},
+                                {9, 0, 0, 0, 3, 0, 9},
+                                {9, 0, 3, 0, 3, 0, 9},
+                                {9, 0, 3, 3, 3, 0, 9},
+                                {9, 0, 0, 0, 0, 2, 9},
+                                {9, 9, 9, 9, 9, 9, 9}
+                        },
+                        new int[][] {
+                                {9, 9, 9, 9, 9, 9, 9},
+                                {9, 4, 4, 4, 4, 4, 9},
+                                {9, 0, 0, 0, 3, 4, 9},
+                                {9, 0, 3, 0, 3, 4, 9},
+                                {9, 0, 3, 3, 3, 4, 9},
+                                {9, 0, 0, 0, 0, 4, 9},
+                                {9, 9, 9, 9, 9, 9, 9}
+                        }
+                ),
+                Arguments.of(
+                        "findPathShouldReturnCorrectPath",
+                        new int[][] {
+                                {9, 9, 9, 9, 9, 9, 9},
+                                {9, 1, 0, 0, 0, 0, 9},
+                                {9, 0, 0, 0, 3, 3, 9},
+                                {9, 0, 3, 0, 3, 0, 9},
+                                {9, 0, 3, 3, 3, 0, 9},
+                                {9, 0, 0, 0, 0, 2, 9},
+                                {9, 9, 9, 9, 9, 9, 9}
+                        },
+                        new int[][] {
+                                {9, 9, 9, 9, 9, 9, 9},
+                                {9, 4, 4, 4, 9, 9, 9},
+                                {9, 4, 4, 4, 3, 3, 9},
+                                {9, 4, 3, 9, 3, 0, 9},
+                                {9, 4, 3, 3, 3, 0, 9},
+                                {9, 4, 4, 4, 4, 4, 9},
+                                {9, 9, 9, 9, 9, 9, 9}
+                        }
+                )
+        );
     }
 
-    @Test
-    void findPathShouldReturnCorrectPath2() {
+    @ParameterizedTest
+    @MethodSource("provideGridsForPathFinding")
+    void findPathShouldReturnCorrectPath(String name, int[][] grid, int[][] expectedGrid) {
+        log.info("Test: {}", name);
         PathFinder pathFinder = new PathFinder();
-        int[][] grid = {
-                {9, 9, 9, 9, 9, 9, 9},
-                {9, 1, 0, 0, 0, 0, 9},
-                {9, 0, 0, 0, 3, 3, 9},
-                {9, 0, 3, 0, 3, 0, 9},
-                {9, 0, 3, 3, 3, 0, 9},
-                {9, 0, 0, 0, 0, 2, 9},
-                {9, 9, 9, 9, 9, 9, 9}
-        };
-        int[][] expectedGrid = {
-                {9, 9, 9, 9, 9, 9, 9},
-                {9, 4, 4, 4, 9, 9, 9},
-                {9, 4, 4, 4, 3, 3, 9},
-                {9, 4, 3, 9, 3, 0, 9},
-                {9, 4, 3, 3, 3, 0, 9},
-                {9, 4, 4, 4, 4, 4, 9},
-                {9, 9, 9, 9, 9, 9, 9}
-        };
-        assertArrayEquals(expectedGrid, pathFinder.findPath(grid));
+        Assertions.assertArrayEquals(expectedGrid, pathFinder.findPath(grid));
     }
 
 

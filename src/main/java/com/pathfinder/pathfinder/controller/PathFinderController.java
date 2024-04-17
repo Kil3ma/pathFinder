@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping(value = "/grid")
+@RequestMapping(value = "/path")
 public class PathFinderController {
     private final PathFinder pathFinder;
     public PathFinderController() {this.pathFinder = new PathFinder();}

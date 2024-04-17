@@ -11,6 +11,7 @@ public class PathFinder {
         boolean moreThanOneStart = false;
         boolean moreThanOneEnd = false;
 
+
         for(int i = 1; i < grid.length - 1; i++) {
             for (int j = 1; j < grid[i].length - 1; j++) {
                 if (grid[i][j] == ObjectType.START_POINT.value) {
@@ -26,6 +27,7 @@ public class PathFinder {
                     if(moreThanOneEnd){
                         throw new IllegalArgumentException("podano więcej niż 1 punkt końcowy");
                     }
+                    grid[i][j] = ObjectType.EMPTY.value;
                     endX = i;
                     endY = j;
                     moreThanOneEnd = true;
@@ -42,7 +44,7 @@ public class PathFinder {
         while(grid[endX][endY] != ObjectType.PATH.value){
             boolean noPath = true;
             for (int[] direction : directions) {
-                if (grid[x + direction[0]][y + direction[1]] == ObjectType.EMPTY.value || grid[x + direction[0]][y + direction[1]] == ObjectType.END_POINT.value) {
+                if (grid[x + direction[0]][y + direction[1]] == ObjectType.EMPTY.value) {
                     grid[x + direction[0]][y + direction[1]] = ObjectType.PATH.value;
                     x = x + direction[0];
                     y = y + direction[1];

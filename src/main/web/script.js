@@ -71,6 +71,9 @@ function displayGrid(grid) {
                 case 4:
                     square.classList.add('path');
                     break;
+                case 5:
+                    square.classList.add('hero')
+                    break;
                 case 9:
                     square.classList.add('wall');
                     break;

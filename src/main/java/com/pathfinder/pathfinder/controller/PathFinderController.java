@@ -11,12 +11,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping(value = "/path")
 public class PathFinderController {
-    private final PathFinder pathFinder;
-    public PathFinderController() {this.pathFinder = new PathFinder();}
+
 
     @PostMapping
     public int[][] findPath(@RequestBody Grid grid){
-        int[][] finalGrid = pathFinder.findPath(grid.getGrid());
+        PathFinder pathFinder = new PathFinder(grid);
+        int[][] finalGrid = pathFinder.getWithFullPath().getGrid();
         Printer.print(finalGrid);
         return finalGrid;
     }

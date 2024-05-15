@@ -14,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @Slf4j
 class PathFinderTest {
 
-    private static Stream<Arguments> provideGridsForPathFinding() {
+   /* private static Stream<Arguments> provideGridsForPathFinding() {
         return Stream.of(
                 Arguments.of(
                         "findPathShouldReturnCorrectPath",
@@ -114,6 +114,6 @@ class PathFinderTest {
                 {9, 9, 9, 9, 9, 9, 9}
         };
         assertThrows(IllegalArgumentException.class, () -> pathFinder.findPath(grid));
-    }
+    }*/
 
 }

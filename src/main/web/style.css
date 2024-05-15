@@ -34,6 +34,10 @@ input, button, select {
     background-color: #555555; /* Szary */
 }
 
+.hero {
+    background-color: #000000; /* Czarny */
+}
+
 .path {
     background-color: #DEAC2C;
 }

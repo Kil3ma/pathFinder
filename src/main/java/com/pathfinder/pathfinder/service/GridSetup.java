@@ -16,6 +16,18 @@ public class    GridSetup {
         grid[gridPoint.getX()][gridPoint.getY()] = gridPoint.getType().value;
         return grid;
     }
+
+    public int[][] clearPath(int[][] grid){
+        for(int[] rows: grid){
+            for(int tile: rows){
+                if(tile == ObjectType.PATH.value){
+                    tile = ObjectType.EMPTY.value;
+                }
+            }
+        }
+        return grid;
+    }
+
     /**
      * Sets the starting point on the grid.
      *

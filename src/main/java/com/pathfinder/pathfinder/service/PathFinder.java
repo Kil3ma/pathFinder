@@ -16,37 +16,6 @@ public class PathFinder {
         this.grid = grid;
     }
 
-    public void findStartAndEndPoints(int[][] grid) throws IllegalArgumentException{
-        boolean moreThanOneStart = false;
-        boolean moreThanOneEnd = false;
-
-
-        for(int i = 1; i < grid.length - 1; i++) {
-            for (int j = 1; j < grid[i].length - 1; j++) {
-                if (grid[i][j] == ObjectType.START_POINT.value) {
-                    if(moreThanOneStart){
-                        throw new IllegalArgumentException("podano więcej niż 1 punkt startowy");
-                    }
-                    x = i;
-                    y = j;
-                    grid[i][j] = ObjectType.PATH.value;
-                    moreThanOneStart = true;
-
-                } else if (grid[i][j] == ObjectType.END_POINT.value) {
-                    if(moreThanOneEnd){
-                        throw new IllegalArgumentException("podano więcej niż 1 punkt końcowy");
-                    }
-                    grid[i][j] = ObjectType.EMPTY.value;
-                    endX = i;
-                    endY = j;
-                    moreThanOneEnd = true;
-                }
-            }
-        }
-        if(x == endX && y == endY){
-            throw new IllegalArgumentException("brak punktu startowego lub końcowego");
-        }
-    }
     public boolean goOneStep(int[] direction){
         Optional<Pair<Integer, Integer>> pointOpt = grid.getCoordinatesOfStartingPointOrHero();
         if (pointOpt.isEmpty()) return false;
@@ -86,20 +55,30 @@ public class PathFinder {
     }
 
     public Grid getWithFullPath() {
-        boolean moved = false;
-        boolean noWay = false;
+        boolean moved = moveIfEmptySpace(false);
+        if (grid.isEndPointFound()) return grid;
+        if (moved) return getWithFullPath();
 
+        moved = moveBackIfNoEmptySpace();
+        if (moved) return getWithFullPath();
+        return grid;
+    }
+
+    private boolean moveIfEmptySpace(boolean moved) {
         if (!moved) moved = goOneStep(directions[0]);
         if (!moved) moved = goOneStep(directions[1]);
         if (!moved) moved = goOneStep(directions[2]);
         if (!moved) moved = goOneStep(directions[3]);
-        if (!moved && !noWay) noWay = goStepBack(directions[0]);
-        if (!moved && !noWay) noWay = goStepBack(directions[1]);
-        if (!moved && !noWay) noWay = goStepBack(directions[2]);
-        if (!moved && !noWay) noWay = goStepBack(directions[3]);
+        return moved;
+    }
 
-        if (moved && !grid.isEndPointFound())  return getWithFullPath();
-        return grid;
+    private boolean moveBackIfNoEmptySpace() {
+        boolean noWay = false;
+        if (!noWay) noWay = goStepBack(directions[0]);
+        if (!noWay) noWay = goStepBack(directions[1]);
+        if (!noWay) noWay = goStepBack(directions[2]);
+        if (!noWay) noWay = goStepBack(directions[3]);
+        return noWay;
     }
 
 

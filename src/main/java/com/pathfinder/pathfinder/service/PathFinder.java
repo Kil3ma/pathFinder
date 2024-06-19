@@ -101,48 +101,6 @@ public class PathFinder {
         if (moved && !grid.isEndPointFound())  return getWithFullPath();
         return grid;
     }
-    public int[][] findPath(int[][] grid) throws IllegalStateException{
-        findStartAndEndPoints(grid);
-
-        while(grid[endX][endY] != ObjectType.PATH.value) {
-            boolean noPath = true;
-            boolean found = false;
-            for (int[] direction : directions) {
-                /*if (grid[x + direction[0]][y + direction[1]] == ObjectType.END_POINT.value) {
-                    found = true;
-                    break;
-                }*/
-                if (grid[x + direction[0]][y + direction[1]] == ObjectType.EMPTY.value) {
-                    grid[x + direction[0]][y + direction[1]] = ObjectType.PATH.value;
-                    x = x + direction[0];
-                    y = y + direction[1];
-                    noPath = false;
-                    break;
-                }
-            }
-
-            if (found) {
-                return grid;
-            }
-
-            if(noPath){
-                boolean reallyNoPath = true;
-                for (int[] direction : directions) {
-                    if (grid[x + direction[0]][y + direction[1]] == ObjectType.PATH.value) {
-                        grid[x][y] = ObjectType.WALL.value;
-                        x = x + direction[0];
-                        y = y + direction[1];
-                        reallyNoPath = false;
-                        break;
-                    }
-                }
-                if (reallyNoPath){
-                    throw new IllegalStateException("nie ma drogi");
-                }
-            }
-        }
-        return grid;
-    }
 
 
 

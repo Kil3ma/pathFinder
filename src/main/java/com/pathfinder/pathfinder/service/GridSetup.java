@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
  * It allows setting the starting point, ending point, and obstacles on the grid.
  */
 @Service
-public class    GridSetup {
+public class  GridSetup {
 
     public int[][] setPoint(GridPoint gridPoint){
         int[][] grid = gridPoint.getGrid();

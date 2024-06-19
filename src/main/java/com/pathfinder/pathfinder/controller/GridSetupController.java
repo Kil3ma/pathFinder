@@ -1,14 +1,13 @@
 package com.pathfinder.pathfinder.controller;
 
 
+import com.pathfinder.pathfinder.model.Grid;
 import com.pathfinder.pathfinder.model.GridPoint;
 import com.pathfinder.pathfinder.service.GridSetup;
 import com.pathfinder.pathfinder.service.Printer;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+@CrossOrigin
 @RestController
 @RequestMapping(value = "/grid-setup")
 public class GridSetupController {
@@ -23,6 +22,11 @@ public class GridSetupController {
         int[][] grid = gridSetup.setPoint(gridPoint);
         Printer.print(grid);
         return grid;
+    }
+
+    @PostMapping("/clear")
+    public int[][] clearPath(@RequestBody Grid gridToClear) {
+        return gridSetup.clearPath(gridToClear.getGrid());
     }
 
 }

@@ -5,6 +5,11 @@ function createGrid() {
     currentGrid = gridService.createGrid();
 }
 
+function clearGrid() {
+    let gridService = new GridService();
+    currentGrid = gridService.clearPath();
+}
+
 function search() {
     const searchService = new SearchService();
     searchService.fetchData(currentGrid)

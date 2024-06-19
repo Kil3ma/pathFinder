@@ -18,4 +18,20 @@ class GridService {
             .catch(error => console.error('Error:', error));
     }
 
+    clearPath() {
+        return fetch('http://localhost:8080/pathfinder/grid-setup/clear', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ grid: currentGrid }),
+        })
+            .then(response => response.json())
+            .then(data => {
+                currentGrid = data;
+                displayGrid(data);
+            })
+            .catch(error => console.error('Error:', error));
+    }
+
 }

@@ -52,7 +52,7 @@ public class PathFinder {
         if (pointOpt.isEmpty()) return false;
         Pair<Integer, Integer> point = pointOpt.get();
         int ongoingTile = grid.getGrid()[point.getFirst() + direction[0]][point.getSecond()+direction[1]];
-        if(ongoingTile == ObjectType.OBSTACLE.value || ongoingTile == ObjectType.WALL.value) return false;
+        if(ongoingTile == ObjectType.OBSTACLE.value || ongoingTile == ObjectType.WALL.value || ongoingTile == ObjectType.PATH.value) return false;
         if(isThereEndPoint(point)){
             grid.setEndPointFound(true);
             return true;
@@ -60,6 +60,20 @@ public class PathFinder {
         grid.getGrid()[point.getFirst()+direction[0]][point.getSecond()+direction[1]] = ObjectType.HERO.value;
         grid.getGrid()[point.getFirst()][point.getSecond()] = ObjectType.PATH.value;
         return true;
+    }
+
+    public boolean goStepBack(int[] direction){
+        Optional<Pair<Integer, Integer>> pointOpt = grid.getCoordinatesOfStartingPointOrHero();
+        if (pointOpt.isEmpty()) return false;
+        Pair<Integer, Integer> point = pointOpt.get();
+        int ongoingTile = grid.getGrid()[point.getFirst() + direction[0]][point.getSecond()+direction[1]];
+        if(ongoingTile == ObjectType.WALL.value || ongoingTile == ObjectType.OBSTACLE.value) return false;
+        if(ongoingTile == ObjectType.PATH.value){
+            grid.getGrid()[point.getFirst()+direction[0]][point.getSecond()+direction[1]] = ObjectType.HERO.value;
+            grid.getGrid()[point.getFirst()][point.getSecond()] = ObjectType.WALL.value;
+            return true;
+        }
+        return false;
     }
 
     public boolean isThereEndPoint(Pair<Integer,Integer> heroCoordinates){
@@ -73,10 +87,17 @@ public class PathFinder {
 
     public Grid getWithFullPath() {
         boolean moved = false;
+        boolean noWay = false;
+
         if (!moved) moved = goOneStep(directions[0]);
         if (!moved) moved = goOneStep(directions[1]);
         if (!moved) moved = goOneStep(directions[2]);
         if (!moved) moved = goOneStep(directions[3]);
+        if (!moved && !noWay) noWay = goStepBack(directions[0]);
+        if (!moved && !noWay) noWay = goStepBack(directions[1]);
+        if (!moved && !noWay) noWay = goStepBack(directions[2]);
+        if (!moved && !noWay) noWay = goStepBack(directions[3]);
+
         if (moved && !grid.isEndPointFound())  return getWithFullPath();
         return grid;
     }
